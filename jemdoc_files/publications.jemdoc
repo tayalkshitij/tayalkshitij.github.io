@@ -1,5 +1,5 @@
 # jemdoc: menu{MENU}{publications.html}
-# jemdoc: title{Taihui Li-Publications}
+# jemdoc: title{Kshitij Tayal-Publications}
 # analytics {UA-109554412-2}
 
 = Research Projects and Publications
@@ -8,20 +8,19 @@
 {}{img_left}{./images/COLING_1.png}{alt text}{215px}{150px}{IMGLINKTARGET}
 [https://aclanthology.org/2020.coling-industry.19/ Model-agnostic Methods for Text Classification with Inherent Noise ] \n
 *Kshitij Tayal*, Rahul Ghosh, Vipin Kumar\n
-/32nd International Conference on Computational Linguistics , 2020/
+/28th International Conference on Computational Linguistics , 2020/
 \n\n
 [https://aclanthology.org/2020.coling-industry.19/ Paper Link]| [https://github.com/tayalkshitij/model-agnostic-methods Paper Code]
 ~~~
 \n
 
 ~~~
-{}{img_left}{./images/TL1.png}{alt text}{215px}{150px}{IMGLINKTARGET}
-[https://arxiv.org/pdf/2106.05152.pdf Rethink Transfer Learning in Medical Image Classification
-] \n
-Le Peng, Hengyue Liang, Gaoxiang Luo, *Taihui Li*, Ju Sun\n
-/arXiv Preprint, 2021/
+{}{img_left}{./images/COLING_2.png}{alt text}{215px}{150px}{IMGLINKTARGET}
+[https://aclanthology.org/2020.coling-industry.22/ Regularized Graph Convolutional Networks for Short Text Classification ] \n
+*Kshitij Tayal*, Nikhil Rao, Saurabh Agarwal, Xiaowei Jia, Karthik Subbian, Vipin Kumar\n
+/28th International Conference on Computational Linguistics , 2020/
 \n\n
-[https://arxiv.org/pdf/2106.05152.pdf Paper Link]| [https://sun-umn.github.io/Transfer-Learning-in-Medical-Imaging/ Paper Webpage]
+[https://aclanthology.org/2020.coling-industry.22/ Paper Link]|
 ~~~
 \n
 
