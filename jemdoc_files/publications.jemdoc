@@ -5,12 +5,12 @@
 = Research Projects and Publications
 
 ~~~
-{}{img_left}{./images/es.gif}{alt text}{215px}{150px}{IMGLINKTARGET}
-[https://arxiv.org/abs/2110.12271 Self-Validation: Early Stopping for Single-Instance Deep Generative Priors] \n
-*Taihui Li*, Zhong Zhuang, Hengyue Liang, Le Peng, Hengkang Wang, Ju Sun\n
-/32nd British Machine Vision Conference, 2021/
+{}{img_left}{./images/COLING_1.png}{alt text}{215px}{150px}{IMGLINKTARGET}
+[https://aclanthology.org/2020.coling-industry.19/ Model-agnostic Methods for Text Classification with Inherent Noise ] \n
+*Kshitij Tayal*, Rahul Ghosh, Vipin Kumar\n
+/32nd International Conference on Computational Linguistics , 2020/
 \n\n
-[https://arxiv.org/abs/2110.12271 Paper Link]| [https://sun-umn.github.io/Self-Validation/ Paper Webpage]| [https://github.com/sun-umn/Self-Validation Paper Code]
+[https://aclanthology.org/2020.coling-industry.19/ Paper Link]| [https://github.com/tayalkshitij/model-agnostic-methods Paper Code]
 ~~~
 \n
 
