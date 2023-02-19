@@ -17,6 +17,21 @@
   left: 0;
 }
 
+/*div.item {*/
+/*    vertical-align: top;*/
+/*    display: inline-block;*/
+/*    !*text-align: left;*!*/
+/*    !*width: 120px;*!*/
+/*}*/
+/*img {*/
+/*    width: 220px;*/
+/*    height: 380px;*/
+/*}*/
+/*.caption {*/
+/*    display: block;*/
+/*}*/
+
+
     a:link, a:visited {
 	text-decoration: none;
 	color: #6279cc;
