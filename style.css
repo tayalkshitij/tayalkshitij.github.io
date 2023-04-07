@@ -17,19 +17,25 @@
   left: 0;
 }
 
-/*div.item {*/
-/*    vertical-align: top;*/
-/*    display: inline-block;*/
-/*    !*text-align: left;*!*/
-/*    !*width: 120px;*!*/
-/*}*/
-/*img {*/
-/*    width: 220px;*/
-/*    height: 380px;*/
-/*}*/
-/*.caption {*/
-/*    display: block;*/
-/*}*/
+<style>
+  ul {
+    list-style-type: disc; /* Change bullet points to disc style */
+  }
+  li {
+    font-size: 20px; /* Set font size to 16px */
+    line-height: 1.5; /* Set line height to 1.5 times the font size */
+      font-family: Arial, Helvetica, sans-serif;
+    margin-bottom: 10px; /* Add 10 pixels of margin to the bottom of each list item */
+  }
+  .description {
+
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 18px; /* Set font size of description text */
+    color: #666; /* Set color of description text */
+    display: block; /* Set display property to block to force description on a separate line */
+    margin-left: 20px; /* Indent description text */
+  }
+</style>
 
 
     a:link, a:visited {
@@ -133,4 +139,4 @@
 
     td {
     padding: 20px;
-    }   
+    }
