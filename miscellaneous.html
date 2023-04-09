@@ -77,6 +77,190 @@
           </ul>
         </ul>
         <br>
+          <h2>Technical Writing and AI Conference</h2>
+          <p> This collection of resources provides strategies for enhancing technical writing skills, reviewing other papers and successfully participating in AI/ML conferences. <br>
+          <ul class="my-list">
+            <li>
+              <a href="https://cs.stanford.edu/people/widom/paper-writing.html"> Tips for Writing Effective Technical Papers </a>
+              <span class="description"> This article provides a comprehensive guide to writing technical papers. </span>
+            </li>
+            <li>
+              <a href="https://docs.google.com/presentation/d/1UY6syNSjyPij849gByUjrQe78HG8MU_K/edit#slide=id.p1"> How to be a good reviewer ? </a>
+              <span class="description"> This presentation focuses on understanding the nature of the review process in the context of AI and machine learning conferences. </span>
+            </li>
+          <li>
+            AI/ML Conference Deadlines
+          </li>
+          <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        /* h2 {
+            text-align: center;
+        } */
+
+        table {
+            width: 60%;
+            margin: 0 auto;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border: 1px solid #ccc;
+        }
+
+        th {
+            background-color: #4CAF50;
+            color: white;
+            cursor: pointer;
+        }
+
+        th:hover {
+            background-color: #45a049;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        tr:hover {
+            background-color: #ddd;
+        }
+    </style>
+    <script>
+        function formatDate(dateString) {
+            let dateObj = new Date(dateString);
+            let formattedDate = dateObj.toLocaleString('en-US', { month: 'short', day: '2-digit' });
+            return formattedDate;
+        }
+
+        function compareDates(a, b, column, order) {
+            let dateA, dateB;
+            if (column === 1) {
+                dateA = new Date(a.cells[column].innerText.split('-')[0].trim());
+                dateB = new Date(b.cells[column].innerText.split('-')[0].trim());
+            } else {
+                dateA = new Date(a.cells[column].innerText);
+                dateB = new Date(b.cells[column].innerText);
+            }
+            return order === 'asc' ? dateA - dateB : dateB - dateA;
+        }
+
+        function sortTable(column, order) {
+            let rows = Array.from(document.querySelectorAll('table tbody tr'));
+            rows.sort((a, b) => compareDates(a, b, column, order));
+            let tbody = document.querySelector('table tbody');
+            rows.forEach(row => tbody.appendChild(row));
+        }
+
+        function onHeaderClick(event) {
+            let column = event.target.cellIndex;
+            let order = event.target.getAttribute('data-order');
+            if (order === 'asc') {
+                event.target.setAttribute('data-order', 'desc');
+            } else {
+                event.target.setAttribute('data-order', 'asc');
+            }
+            sortTable(column, order);
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            let headers = document.querySelectorAll('th');
+            headers.forEach(header => header.addEventListener('click', onHeaderClick));
+        });
+    </script>
+</head>
+<body>
+    <table>
+        <thead>
+            <tr>
+                <th> ML/AI Conferences </th>
+                <th data-order="asc">Conference Dates</th>
+                <th data-order="asc"> Conference Deadline</th>
+            </tr>
+        </thead>
+         <tbody>
+            <tr>
+                <td><a href="https://aaai-23.aaai.org/"> AAAI </a></td>
+                <td>Feb 07-14</td>
+                <td>Aug 15</td>
+            </tr>
+            <tr>
+                <td><a href="https://www.wsdm-conference.org/2023/"> WSDM </a></td>
+                <td>Mar 01-03</td>
+                <td>Aug 12</td>
+            </tr>
+            <tr>
+                <td><a href="https://www.siam.org/conferences/cm/conference/sdm23"> SDM </a></td>
+                <td>Apr 27-29</td>
+                <td>Oct 7</td>
+            </tr>
+            <tr>
+                <td><a href="https://www2023.thewebconf.org/"> WWW </a></td>
+                <td>May 01-04</td>
+                <td>Oct 13</td>
+            </tr>
+            <tr>
+                <td><a href="https://iclr.cc/"> ICLR </a></td>
+                <td>May 01-05</td>
+                <td>Sep 28</td>
+            </tr>
+            <tr>
+                <td><a href="https://pakdd2023.org/"> PAKDD </a></td>
+                <td>May 25-28</td>
+                <td>Dec 7</td>
+            </tr>
+
+            <tr>
+                <td><a href="https://2023.ieeeicassp.org/"> ICASSP </a></td>
+                <td>Jun 04-10</td>
+                <td>Oct 26</td>
+            </tr>
+              <tr>
+                <td><a href="https://sigir.org/sigir2023/"> SIGIR </a></td>
+                <td>Jul 23-27</td>
+                <td>Jan 31</td>
+            </tr>
+              <tr>
+                <td><a href="https://icml.cc/"> ICML </a></td>
+                <td>Jul 23-29</td>
+                <td>Jan 26</td>
+            </tr>
+             <tr>
+                <td><a href="https://kdd.org/kdd2023/"> KDD </a></td>
+                <td>Aug 06-10</td>
+                <td>Feb 02</td>
+            </tr>
+            <tr>
+                <td><a href="https://ijcai-23.org/"> IJCAI </a></td>
+                <td>Aug 19-25</td>
+                <td>Jan 18</td>
+            </tr>
+             <tr>
+                <td><a href="https://cikm2023.github.io/"> CIKM </a></td>
+                <td>Oct 21-25</td>
+                <td>Jun 02</td>
+            </tr>
+            <tr>
+                <td><a href="https://www.cloud-conf.net/icdm2023/"> ICDM </a></td>
+                <td>Dec 01-04</td>
+                <td>Jul 01</td>
+            </tr>
+            <tr>
+                <td><a href="https://nips.cc/"> NeurIPS </a></td>
+                <td>Dec 10-16</td>
+                <td>May 17</td>
+            </tr>
+        </tbody>
+</table>
+</body>
+        </ul>
+        <br>
+
+
 
         <br>
         <br>
