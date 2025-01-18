@@ -1,3 +1,7 @@
+---
+layout: default
+---
+
 # How I Have Set Up My Terminal: Guide to ZSH Setup
 
 Want to have better terminal experience? Here's my setup combining iTerm2, ZSH, Oh My Zsh, and powerful plugins that'll make your command-line work both beautiful and efficient.
