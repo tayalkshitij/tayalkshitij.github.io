@@ -87,6 +87,18 @@ source ~/.zshrc
 
 The Powerlevel10k configuration wizard will automatically start on first launch. Follow the prompts to customize your terminal's appearance.
 
----
 
+
+## Using iterm2+oh-my-zsh+powerlevel10k with VSCode
+
+If you are using VS Code, you can also use the same terminal setup in VS Code. To do this, put the following lines in the `settings.json` file of VS Code:
+
+```json
+{
+    "terminal.external.osxExec": "iTerm.app",    // Set iTerm2 as your external terminal application
+    "terminal.explorerKind": "external"          // VS Code always open new terminals in iTerm2 instead of the integrated terminal
+}
+``` 
+
+---
 **Pro Tip**: Install [iTerm2](https://iterm2.com/) first on macOS for the best experience. It offers split panes, better color support, and improved window management over the default Terminal.app.
