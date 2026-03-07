@@ -1,3 +1,7 @@
+---
+layout: default
+---
+
 # LLM Orchestration: Task Decomposition, Coordination, and Architecture Styles
 
 ## Introduction
