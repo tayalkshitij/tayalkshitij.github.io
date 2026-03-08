@@ -131,7 +131,7 @@ Static plans inevitably encounter failures during execution, making closed-
 loop replanning a critical coordination mechanism.The PlanGenLLMs survey [^15] 
 distinguishes between implicit closed-loop systems, which fix only the 
 failed action, and explicit closed-loop systems, which regenerate the entire 
-plan from the point of failure. ADaPT (Prasad et al., 2023) [^17] introduced 
+plan from the point of failure. ADaPT [^17] introduced 
 recursive decomposition triggered by execution failure: when a subtask 
 cannot be executed, it is further decomposed until all components are 
 within the executor's capabilities. This adaptive approach prevents error 
@@ -139,76 +139,111 @@ compounding and enables LLMs to handle dynamic, long-horizon tasks.
 
 ***
 
+
 ## Multi-Agent Orchestration Architectures
 
-When tasks exceed the capacity of a single LLM, multi-agent systems distribute intelligence across specialized agents coordinated by an orchestration layer. A 2026 survey identifies four primary orchestration patterns:[^30]
+When tasks exceed the capacity of a single LLM, multi-agent systems 
+distribute intelligence across specialized agents by an orchestration layer. The literature 
+describes these systems along two dimensions: the communication 
+topology (how agents are connected) and the interaction paradigm 
+(how agents collaborate).
 
-### Centralized Orchestration
 
-A single controller agent manages the entire workflow—decomposing tasks, assigning them to specialized agents, monitoring execution, and synthesizing outputs. This includes:[^31][^30]
+### Role-Playing and Conversational Collaboration
 
-- **Controller-Agent Pattern**: The controller decomposes hard tasks into smaller units, assigns work to capable agents, and compiles final output.[^30]
-- **Hierarchical Task Decomposition**: Tasks are arranged as a tree, with parent agents dividing work for child agents at each level.[^30]
-- **Pipeline Processing**: Agents are arranged linearly, with each agent's output becoming the next agent's input.[^30]
+CAMEL [^19] introduced the role-playing paradigm, 
+where two LLM agents—an "AI user" and an "AI assistant"—are assigned 
+complementary roles and collaborate through structured conversation 
+toward task completion. Using inception prompting to maintain role 
+consistency, CAMEL demonstrated that autonomous agent cooperation 
+could proceed with minimal human intervention. This decentralized, 
+peer-to-peer pattern established role assignment as a fundamental 
+mechanism for multi-agent coordination.
 
-Centralized patterns offer clear structure and simplified failure management but introduce single points of failure and scaling limitations.[^30]
+### Multi-Agent Debate
 
-### Decentralized Orchestration
+Du et al. [^20] proposed multi-agent debate, where multiple LLM instances independently 
+generate answers and then critique each other's reasoning over 
+multiple rounds to converge on a consensus. Multi-agent debate 
+introduced a competitive-cooperative dynamic—agents simultaneously 
+collaborate toward correctness while challenging each other's 
+reasoning—that became a widely adopted pattern for improving LLM 
+reliability.
 
-Agents operate with autonomy, making decisions based on local information and interacting peer-to-peer. Patterns include:[^32][^30]
+### Structured Workflow Orchestration (MetaGPT and ChatDev)
 
-- **Swarm Intelligence**: Agents work collaboratively and share information without hierarchy.[^30]
-- **Committee Voting Systems**: Agents form units for collective decision-making, aggregating evaluations through voting algorithms.[^30]
+MetaGPT [^21] operationalized the 
+principle "Code = SOP(Team)" by encoding standardized operating 
+procedures into multi-agent collaboration. Agents are assigned 
+professional roles—Product Manager, Architect, Engineer, QA 
+Engineer—and interact through structured communication interfaces 
+with publish-subscribe message filtering. ChatDev [^22] applied a similar philosophy, organizing agents into a 
+virtual software company that follows a waterfall-style development 
+process across design, coding, testing, and documentation phases. 
+Both systems demonstrated that imposing human organizational 
+structures on agent teams reduces the cascading 
+hallucination errors that plague unstructured multi-agent 
+interactions.
 
-Decentralized systems offer higher fault tolerance and parallelism but suffer from complex debugging and unpredictable emergent behaviors.[^30]
+### Orchestration Topologies
 
-### Hierarchical Orchestration
-
-A hybrid approach where higher-level agents manage groups of lower-level specialized agents, combining centralized oversight with decentralized execution. This balances control and scalability, enabling the orchestrator to intervene at strategic decision points while allowing agents tactical autonomy.[^33][^32]
-
-### Hybrid Orchestration (Blackboard Systems)
-
-Agents collaborate through a shared knowledge space (blackboard), reading from and writing to a common data structure. The orchestration layer manages what gets written and ensures agents build on each other's contributions. This pattern supports flexible collaboration while maintaining computation visibility.[^30]
+**Centralized orchestration** employs a single controller agent 
+that decomposes tasks, assigns them to specialized agents, monitors 
+execution, and synthesizes outputs. This includes the 
+controller-agent pattern (as in HuggingGPT), pipeline processing 
+where agents are arranged linearly with each agent's output becoming 
+the next agent's input, and hierarchical task decomposition where 
+parent agents divide work for child agents at each level. These patterns introduce single points of failure.
+**Decentralized orchestration** allows agents to operate 
+autonomously based on local information. This includes swarm 
+intelligence patterns where agents collaborate without hierarchy, 
+and committee voting systems where agents aggregate evaluations 
+through voting (as in multi-agent debate).
+**Hierarchical orchestration** combines centralized oversight with 
+decentralized execution, where higher-level agents manage groups of 
+lower-level specialists.
+**Blackboard systems** coordinate agents through a shared knowledge 
+space, where agents read from and write to a common data structure. 
+The orchestration layer manages contributions and ensures agents 
+build on each other's work,
 
 ***
 
 ## Framework Implementations and Protocols
 
-The theoretical architectures above are realized through practical frameworks and emerging communication standards.
+The theoretical architectures above are realized through Agentic AI frameworks and communication standards.
 
 ### Implementation Frameworks
 
 | Framework | Architecture Style | Key Abstraction | Best For |
 |---|---|---|---|
-| LangGraph | Graph-based workflows | Agents as nodes in directed graph | Complex branching + conditional logic[^41] |
-| AutoGen | Conversational multi-agent | Natural language agent dialogue | Prototyping, human-in-the-loop[^41] |
-| CrewAI | Role-based collaboration | Agents with roles, tasks, crews | Business process automation[^41] |
+| LangGraph | Graph-based workflows | Agents as nodes in directed graph | Complex branching + conditional logic[^23] |
+| AutoGen | Conversational multi-agent | Natural language agent dialogue | Prototyping, human-in-the-loop[^24] |
+| CrewAI | Role-based collaboration | Agents with roles, tasks, crews | Business process automation[^25] |
 
-LangGraph treats agent interactions as nodes in a directed graph, providing exceptional flexibility for workflows with conditional logic, parallel processing, and dynamic adaptation. AutoGen emphasizes conversational interactions where agents adapt roles based on context, using patterns like RoundRobinGroupChat and SelectorGroupChat for coordination. CrewAI focuses on structured role-based teams, with each agent having a clearly defined responsibility.[^42][^43][^41]
+LangGraph treats agent interactions as nodes in a directed graph, providing exceptional flexibility for workflows with conditional logic, parallel processing, and dynamic adaptation. AutoGen emphasizes conversational interactions where agents adapt roles based on context, using patterns like RoundRobinGroupChat and SelectorGroupChat for coordination. CrewAI focuses on structured role-based teams, with each agent having a clearly defined responsibility.
 
 ### Communication Protocols
 
-Two emerging standards are formalizing inter-agent communication:[^44]
+Two emerging standards are formalizing inter-agent communication:
 
-- **Model Context Protocol (MCP)**: Standardizes how agents access external tools and contextual data through a client-server design. Agents request capabilities (tools, resources, prompts) while connected systems expose these as standardized callable services.[^44]
-- **Agent-to-Agent (A2A) Protocol**: Governs peer coordination, negotiation, and delegation between agents. Supports structured metadata, cryptographic signing, and role-based routing for enterprise-grade deployments.[^44]
+- **Model Context Protocol (MCP)**: Standardizes how agents access external tools and contextual data through a client-server design. Agents request capabilities (tools, resources, prompts) while connected systems expose these as standardized callable services.[^26]
+- **Agent-to-Agent (A2A) Protocol**: Governs peer coordination, negotiation, and delegation between agents. Supports structured metadata, cryptographic signing, and role-based routing for enterprise-grade deployments.[^27]
 
-Together, MCP handles agent-to-tool communication while A2A handles agent-to-agent communication, forming the dual foundation of orchestrated multi-agent systems.[^44]
+Together, MCP handles agent-to-tool communication while A2A handles agent-to-agent communication, forming the dual foundation of orchestrated multi-agent systems.
 
 ***
 
 
 ## Synthesis: A Unified View of Orchestration
 
-The literature reveals a clear evolutionary trajectory in LLM orchestration:
+Evolutionary trajectory in LLM orchestration:
 
 1. **Internal reasoning** (CoT, ToT, GoT) enables a single LLM to decompose problems cognitively, progressing from linear chains to arbitrary graph structures.
 2. **Tool augmentation** (MRKL, Toolformer, HuggingGPT) extends the LLM's capabilities by connecting it to external systems, with the LLM serving as router and planner.
-3. **Task decomposition frameworks** formalize how goals are broken into subtasks—sequentially, in parallel, asynchronously, or recursively—with closed-loop replanning for robustness.[^25]
-4. **Multi-agent systems** distribute both reasoning and execution across specialized agents, coordinated through centralized, decentralized, hierarchical, or hybrid patterns.[^44][^30]
-5. **Standardized protocols** (MCP, A2A) and frameworks (LangGraph, AutoGen, CrewAI) bring these patterns to production, enabling interoperable, enterprise-scale deployments.[^41][^44]
-
-The field is converging toward systems that combine multiple orchestration strategies—using internal reasoning for planning, tool augmentation for execution, multi-agent coordination for complex workflows, and self-reflection for continuous improvement—all unified by formal communication protocols and governance frameworks.[^45][^44]
+3. **Task decomposition frameworks** formalize how goals are broken into subtasks—sequentially, in parallel, asynchronously, or recursively—with closed-loop replanning for robustness.
+4. **Multi-agent systems** distribute both reasoning and execution across specialized agents, coordinated through centralized, decentralized, hierarchical, or hybrid patterns.
+5. **Standardized protocols** (MCP, A2A) and frameworks (LangGraph, AutoGen, CrewAI) bring these patterns to production, enabling interoperable, enterprise-scale deployments.
 
 ---
 
@@ -252,45 +287,20 @@ The field is converging toward systems that combine multiple orchestration strat
 
 [^18]: [Wang, Lei, et al. "Plan-and-solve prompting: Improving zero-shot chain-of-thought reasoning by large language models" ACL 2023] (https://arxiv.org/abs/2305.04091)
 
+[^19]: [Li, Guohao, et al. "Camel: Communicative agents for" mind" exploration of large language model society." NeuRIPS 2023] (https://openreview.net/pdf?id=3IyL2XWDkG)
 
+[^20]: [Du, Yilun, et al. "Improving factuality and reasoning in language models through multiagent debate." ICML 2024.] (https://arxiv.org/pdf/2305.14325)
 
+[^21]: [Hong, Sirui, et al. "MetaGPT: Meta programming for a multi-agent collaborative framework." ICLR 2023.] (https://arxiv.org/pdf/2308.00352)
 
-[^26]: [Plan-and-Solve Prompting: Improving Zero-Shot Chain-of ... - ar5iv](https://ar5iv.labs.arxiv.org/html/2305.04091) - We then pass the above prompt to the LLM which subsequently outputs a reasoning process. ... (2022) ...
+[^22]: [Qian, Chen, et al. "Chatdev: Communicative agents for software development." ACL 2024] (https://aclanthology.org/2024.acl-long.810.pdf)
 
-[^27]: [LLM-Based Hierarchical TODO Decomposition - Emergent Mind](https://www.emergentmind.com/topics/llm-based-hierarchical-todo-decomposition) - A paradigm that leverages LLMs to decompose complex tasks into hierarchically structured subtasks, i...
+[^23]: [LangGraph] (https://www.langchain.com/langgraph)
 
-[^28]: [[Literature Review] Agent-Oriented Planning in Multi-Agent Systems](https://www.themoonlight.io/en/review/agent-oriented-planning-in-multi-agent-systems) - The paper titled "Agent-Oriented Planning in Multi-Agent Systems" presents a novel framework designe...
+[^24]: [AutoGen] (https://github.com/microsoft/autogen)
 
-[^29]: [[PDF] Agent-Oriented Planning in Multi-Agent Systems - ICLR Proceedings](https://proceedings.iclr.cc/paper_files/paper/2025/file/31610e68fe41a62e460e044216a10766-Paper-Conference.pdf) - In the context of agent-oriented planning, it is important to consider the capabilities of agents. A...
+[^25]: [CrewAI] (https://github.com/crewAIInc/crewAI)
 
-[^30]: [LLM Agent Orchestration Patterns: Architectural Frameworks for ...](https://www.c-sharpcorner.com/article/llm-agent-orchestration-patterns-architectural-frameworks-for-managing-complex/) - Abstract. This study examines LLM agent orchestration by evaluating four architectural approaches: d...
+[^26]: [MCP] (https://modelcontextprotocol.io/docs/getting-started/intro)
 
-[^31]: [How Multi-Agent Orchestration Powers Enterprise AI - Kore.ai](https://www.kore.ai/blog/what-is-multi-agent-orchestration) - Learn how multi-agent orchestration coordinates specialized AI agents to work as a unified system, d...
-
-[^32]: [AI Agent Orchestration Explained: How Intelligent ...](https://www.xcubelabs.com/blog/ai-agent-orchestration-explained-how-intelligent-agents-work-together/) - Hierarchical Orchestration: A hybrid approach where higher-level agents manage groups of lower-level...
-
-[^33]: [Hierarchical Multi-Agent Orchestration - Emergent Mind](https://www.emergentmind.com/topics/hierarchical-multi-agent-orchestration) - Hierarchical Multi-Agent Orchestration coordinates autonomous agents through layered control, enabli...
-
-[^34]: [What is BabyAGI? - IBM](https://www.ibm.com/think/topics/babyagi) - BabyAGI is an autonomous agent framework designed to generate and run a sequence of tasks based on a...
-
-[^35]: [Deep Dive Part 2: How does BabyAGI actually work? - Parcha's Blog](https://blog.parcha.ai/deep-dive-part-2-how-does-babyagi/) - BabyAGI is an autonomous agent system that uses large language models (LLMs)2 to carry out tasks bas...
-
-[^36]: [Voyager: An Open-Ended Embodied Agent with Large ... - arXiv](https://arxiv.org/html/2305.16291) - We introduce Voyager, the first LLM-powered embodied lifelong learning agent in Minecraft that conti...
-
-[^37]: [[PDF] Generative Agents: Interactive Simulacra of Human Behavior](https://3dvar.com/Park2023Generative.pdf) - Our findings suggest that the full architecture of generative agents generates the most believable b...
-
-[^38]: [Generative Agents: Interactive Simulacra of Human Behavior](https://dl.acm.org/doi/fullHtml/10.1145/3586183.3606763) - In this paper, we introduce generative agents: computational software agents that simulate believabl...
-
-[^39]: [[R] Reflexion: an autonomous agent with dynamic memory and self ...](https://www.reddit.com/r/MachineLearning/comments/1215dbl/r_reflexion_an_autonomous_agent_with_dynamic/) - We propose Reflexion, an approach that endows an agent with dynamic memory and self-reflection capab...
-
-[^40]: [[PDF] Reflexion: Language Agents with Verbal Reinforcement Learning](https://openreview.net/pdf?id=vAElhFcKW6) - In this paper, we show that several of these concepts can be enhanced with self-reflection to build ...
-
-[^41]: [CrewAI vs LangGraph vs AutoGen: Choosing the Right Multi-Agent ...](https://www.datacamp.com/tutorial/crewai-vs-langgraph-vs-autogen) - AutoGen focuses on conversational agent architecture, emphasizing natural language interactions and ...
-
-[^42]: [CrewAI vs. AutoGen: Choosing the Right AI Agent Framework](https://guptadeepak.com/crewai-vs-autogen-choosing-the-right-ai-agent-framework/) - CrewAI and AutoGen are two prominent multi-agent AI frameworks, each with its own strengths and lear...
-
-[^43]: [Autogen vs. Crew AI: Choosing the right agentic framework](https://blog.logrocket.com/autogen-vs-crew-ai/) - Build autonomous AI agents with Autogen and Crew AI. Learn how agentic AI enables multi-agent system...
-
-[^44]: [The Orchestration of Multi-Agent Systems: Architectures, Protocols ...](https://arxiv.org/html/2601.13671v1) - Risks inherited from large language models, such as hallucination, bias, and data leakage, are magni...
-
-[^45]: [Agentic Artificial Intelligence (AI): Architectures, Taxonomies, and ...](https://arxiv.org/html/2601.12560v1) - In this paper, we investigate architectures and propose a unified taxonomy that breaks agents into P...
+[^27]: [A2A] (https://github.com/a2aproject/A2A)
